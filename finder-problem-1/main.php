@@ -16,12 +16,6 @@
 		die();
 	}
 	
-	if(strlen($card1) != 2 || strlen($card1) != 2 ) {
-		echo "cards can only be two letters!\n";
-		die();
-	}
-
-	// $faces = [2, 3, 4, 5, 6, 7, 8, 9, 10, A, K, Q, J];
 	$value_map = [
 		2 => 2,
 		3 => 3,
@@ -38,18 +32,14 @@
 		'J' => 10
 	];
 	
-	if(!in_array($card1[0], array_keys($value_map)) || !in_array($card2[0], array_keys($value_map))) {
-		echo "first part of the card is incorrect!\n";
-		die();
+	if(!preg_match('/^([2-9]|10|A|K|Q|J)([SCDH])$/i', $card1) || !preg_match('/^([0-9AKQJ]{1,2})([SCDH])$/i', $card2)) {
+		echo "card are not formatted correctly!\n";
+		exit;
 	}
 	
-	$suits = ['S', 'C', 'D', 'H'];
-	if(!in_array($card1[1], $suits) || !in_array($card2[1], $suits)) {
-		echo "second part of the card is incorrect!\n";
-		die();
-	}
-	
+	$face_1 = substr($card1, 0, strlen($card1) - 1);
+	$face_2 = substr($card2, 0, strlen($card2) - 1);
   
-  echo "result: " . ($value_map[$card1[0]]+$value_map[$card2[0]]) . "\n";
+	echo "result: " . ($value_map[$face_1]+$value_map[$face_2]) . "\n";
   
 ?>
